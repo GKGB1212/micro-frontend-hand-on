@@ -1,6 +1,17 @@
+import { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
+import { EVENTS, on } from "./eventBus";
 
 export default function Layout() {
+  const [cartCount, setCartCount] = useState(0);
+
+  useEffect(() => {
+    const off = on(EVENTS.CART_ADD, () => {
+      setCartCount((c) => c + 1);
+    });
+    return off;
+  }, []);
+
   const linkStyle = {
     padding: "8px 16px",
     textDecoration: "none",
@@ -22,21 +33,16 @@ export default function Layout() {
         }}
       >
         <h1 style={{ margin: 0, marginRight: 20 }}>🏪 ShopMart</h1>
-        <nav style={{ display: "flex", gap: 12 }}>
-          <Link to="/" style={linkStyle}>
-            Home
-          </Link>
-          <Link to="/products" style={linkStyle}>
-            Products
-          </Link>
+        <nav style={{ display: "flex", gap: 12, flex: 1 }}>
+          <Link to="/" style={linkStyle}>Home</Link>
+          <Link to="/products" style={linkStyle}>Products</Link>
           <Link to="/cart" style={linkStyle}>
-            Cart
+            Cart 🛒 <strong>({cartCount})</strong>
           </Link>
         </nav>
       </header>
-
       <main style={{ padding: 20 }}>
-        <Outlet /> {/* Routes con sẽ render ở đây */}
+        <Outlet />
       </main>
     </div>
   );
