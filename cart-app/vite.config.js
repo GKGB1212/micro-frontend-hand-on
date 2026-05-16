@@ -12,7 +12,7 @@ export default defineConfig({
       exposes: {
         "./Cart": "./src/Cart.jsx",
       },
-      shared: ["react", "react-dom"],
+      shared: ["react", "react-dom", "zustand"],
     }),
   ],
   server: {

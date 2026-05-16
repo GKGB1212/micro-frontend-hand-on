@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { emit, EVENTS } from "./eventBus";
+import { useCartStore } from "./cartStore";
 
 const products = [
   { id: 1, name: "iPhone 15", price: 999 },
@@ -9,11 +9,10 @@ const products = [
 
 export default function ProductList() {
   const [message, setMessage] = useState("");
+  const addItem = useCartStore((state) => state.addItem);
 
   const handleAddToCart = (product) => {
-    // 🔥 Emit event ra event bus — cart-app sẽ nhận
-    emit(EVENTS.CART_ADD, product);
-
+    addItem(product);
     setMessage(`✅ Added ${product.name} to cart!`);
     setTimeout(() => setMessage(""), 2000);
   };

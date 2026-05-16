@@ -1,17 +1,8 @@
-import { useEffect, useState } from "react";
-import { EVENTS, on } from "./eventBus";
+import { useCartStore } from "./cartStore";
 
 export default function Cart() {
-  const [items, setItems] = useState([]);
-
-  useEffect(() => {
-    // 🔥 Subscribe to CART_ADD event
-    const off = on(EVENTS.CART_ADD, (product) => {
-      setItems((prev) => [...prev, product]);
-    });
-
-    return off; // cleanup khi unmount
-  }, []);
+  const items = useCartStore((state) => state.items);
+  const clear = useCartStore((state) => state.clear);
 
   const total = items.reduce((sum, item) => sum + item.price, 0);
 
@@ -25,13 +16,18 @@ export default function Cart() {
       {items.length === 0 ? (
         <p style={{ color: "gray" }}>Cart is empty</p>
       ) : (
-        <ul>
-          {items.map((item, idx) => (
-            <li key={idx}>
-              {item.name} — ${item.price}
-            </li>
-          ))}
-        </ul>
+        <>
+          <ul>
+            {items.map((item, idx) => (
+              <li key={idx}>
+                {item.name} — ${item.price}
+              </li>
+            ))}
+          </ul>
+          <button onClick={clear} style={{ marginTop: 12 }}>
+            Clear cart
+          </button>
+        </>
       )}
     </div>
   );

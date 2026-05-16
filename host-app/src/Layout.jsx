@@ -1,16 +1,8 @@
-import { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
-import { EVENTS, on } from "./eventBus";
+import { useCartStore } from "./cartStore";
 
 export default function Layout() {
-  const [cartCount, setCartCount] = useState(0);
-
-  useEffect(() => {
-    const off = on(EVENTS.CART_ADD, () => {
-      setCartCount((c) => c + 1);
-    });
-    return off;
-  }, []);
+  const cartCount = useCartStore((state) => state.items.length);
 
   const linkStyle = {
     padding: "8px 16px",

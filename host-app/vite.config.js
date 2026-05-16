@@ -29,7 +29,7 @@ export default defineConfig({
       // BẮT BUỘC khai báo shared deps GIỐNG remote.
       // Federation runtime sẽ negotiate version để dùng chung.
       // Nếu host khai báo React 18 và remote khai báo React 17 → conflict.
-      shared: ["react", "react-dom"],
+      shared: ["react", "react-dom", "zustand"],
     }),
   ],
   server: {

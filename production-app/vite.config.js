@@ -42,7 +42,7 @@ export default defineConfig({
       // Nếu không khai báo: mỗi app sẽ load React riêng → bundle x2,
       // gây lỗi "Invalid hook call" vì 2 instance React khác nhau.
       // Federation runtime sẽ tự negotiate version giữa host và remote.
-      shared: ["react", "react-dom"],
+      shared: ["react", "react-dom", "zustand"],
     }),
   ],
 
